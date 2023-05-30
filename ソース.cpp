@@ -4,9 +4,9 @@
 #include <random>
 
 template<class T,class F>
-bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
+std::vector<T> TableSort(const std::vector<T>& A, F op) {//nomaly case is not need this.
 
-	std::vector<std::size_t> X;
+	std::vector<std::size_t> X;//table
 
 	for (std::size_t i = 0; i < A.size(); i++) {
 		X.push_back(i);
@@ -16,16 +16,21 @@ bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
 		for (std::size_t j = i + 1; j < A.size(); j++) {
 			//if(A[X[i]] > A[X[j]]){
 			if (op(A[X[i]] , A[X[j]])) {
-				std::swap(A[X[i]], A[X[j]]);
+				std::swap(X[i],X[j]);
 			}
 		}
 	}
-
+	/** /
 	for (std::size_t i = 0; i < A.size(); i++) {//A[] element is move to only one. 
 		A[i] = A[X[i]];
 	}
+	/**/
+	std::vector<T> Y;
+	for (std::size_t i = 0; i < A.size(); i++) {//A[] element is move to only one. 
+		Y.push_back(A[X[i]]);
+	}
 
-	return true;
+	return Y;
  }
 
  int main() {
@@ -49,9 +54,9 @@ bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
 	 std::vector<int> X = V;
 	 auto F = [](const auto& A, const auto& B) {return A > B; };
 
-	 TableSort(X, F);
+	 auto Y = TableSort(X, F);
 
-	 for (auto& o : X) {
+	 for (auto& o : Y) {
 		 std::cout << o << ',';
 	 }
 	 std::cout << std::endl;
@@ -64,7 +69,7 @@ bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
 	 std::cout << std::endl;
 	 std::cout << std::endl;
 	 
-	 if (V == X) { std::cout << "OK!" << std::endl; }
+	 if (V == Y) { std::cout << "OK!" << std::endl; }
 	 else
 	 {
 		 std::cout << "NOT Ok!" << std::endl;
