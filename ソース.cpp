@@ -12,17 +12,6 @@ bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
 		X.push_back(i);
 	}
 
-	/** /
-	int Q = 1;
-	int W = 0;
-
-	if (!op(Q, W)) {
-		std::reverse(X.begin(), X.end());
-	//	std::reverse(A.begin(), A.end());
-	}
-
-	/**/
-
 	for (std::size_t i = 0; i < A.size(); i++) {
 		for (std::size_t j = i + 1; j < A.size(); j++) {
 			//if(A[X[i]] > A[X[j]]){
@@ -58,16 +47,17 @@ bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
 	 std::cout << std::endl;
 
 	 std::vector<int> X = V;
+	 auto F = [](const auto& A, const auto& B) {return A > B; };
 
-	 TableSort(X, [](auto& A, auto& B) {return A > B; });
+	 TableSort(X, F);
 
-	 for (auto& o : V) {
+	 for (auto& o : X) {
 		 std::cout << o << ',';
 	 }
 	 std::cout << std::endl;
 	 std::cout << std::endl;
 
-	 std::sort(V.begin(), V.end());
+	 std::sort(V.begin(), V.end(),F);
 	 for (auto& o : V) {
 		 std::cout << o << ',';
 	 }
