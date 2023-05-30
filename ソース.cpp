@@ -3,17 +3,30 @@
 #include <algorithm>
 #include <random>
 
-template<class T>
- bool TableSort(std::vector<T>& A) {//nomaly case is not need this.
+template<class T,class F>
+bool TableSort(std::vector<T>& A, F op) {//nomaly case is not need this.
 
 	std::vector<std::size_t> X;
 
 	for (std::size_t i = 0; i < A.size(); i++) {
 		X.push_back(i);
 	}
+
+	/** /
+	int Q = 1;
+	int W = 0;
+
+	if (!op(Q, W)) {
+		std::reverse(X.begin(), X.end());
+	//	std::reverse(A.begin(), A.end());
+	}
+
+	/**/
+
 	for (std::size_t i = 0; i < A.size(); i++) {
 		for (std::size_t j = i + 1; j < A.size(); j++) {
-			if (A[X[i]] > A[X[j]]) {
+			//if(A[X[i]] > A[X[j]]){
+			if (op(A[X[i]] , A[X[j]])) {
 				std::swap(A[X[i]], A[X[j]]);
 			}
 		}
@@ -26,7 +39,7 @@ template<class T>
 	return true;
  }
 
-int main() {
+ int main() {
 
 	 std::random_device rd;
 	 std::mt19937 mt(rd());
@@ -46,24 +59,26 @@ int main() {
 
 	 std::vector<int> X = V;
 
-	 TableSort(X);
+	 TableSort(X, [](auto& A, auto& B) {return A > B; });
 
 	 for (auto& o : V) {
 		 std::cout << o << ',';
 	 }
 	 std::cout << std::endl;
 	 std::cout << std::endl;
+
 	 std::sort(V.begin(), V.end());
 	 for (auto& o : V) {
 		 std::cout << o << ',';
 	 }
 	 std::cout << std::endl;
 	 std::cout << std::endl;
+	 
 	 if (V == X) { std::cout << "OK!" << std::endl; }
 	 else
 	 {
 		 std::cout << "NOT Ok!" << std::endl;
 	 }
 
-	 return 0;
+	 return 0; 
  }
